@@ -200,7 +200,7 @@ const handleRemoveItem = async (itemId) => {
 
                           <div className="d-flex align-items-center">
                             <p className="fw-bold mb-0 me-5 pe-3">
-                              {item.productsId.price}$
+                             Price : {item.productsId.price}$
                             </p>
 
                             <div className="def-number-input number-input safari_only">
@@ -225,15 +225,16 @@ const handleRemoveItem = async (itemId) => {
                               </MDBBtn>
                             </div>
                           </div>
-                          <MDBTypography tag="h5" className="fw-bold  mx-5">
-                            Total:{item?.count}
+                          <MDBTypography tag="h6" className="fw-bold  mx-5">
+                            
+                            Quantity:{item.quantity}
                           </MDBTypography>
                           <MDBTypography
                             tag="h5"
                             style={{ width: "100px" }}
                             className="fw-bold mx-5 "
                           >
-                            {(item.price * item?.count).toFixed(2)}$
+                            Total:{item.productsId.price * item.quantity}
                           </MDBTypography>
                         </div>
                       </div>
