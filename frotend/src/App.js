@@ -55,7 +55,7 @@ function App() {
   const [list,setList]=useState(userList)
   const [users, setUsers] = useState([])
   const userId = localStorage.get
-  // const [poduct,setProduct] = useState([])
+  
   const [cartCount, setCartCount] = useState([])
 
 
