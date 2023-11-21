@@ -1,0 +1,105 @@
+import React, { useEffect, useState } from "react";
+import { Button } from "react-bootstrap";
+import Navbarfront from "../components/Navbar";
+import Footer from "../components/Footer";
+import { Axios } from "../App";
+import { useNavigate } from "react-router";
+
+const All = () => {
+  const [products, setProducts] = useState([]);
+  // const [data, setData] = useState([])
+  
+  console.log(products)
+  const navigate = useNavigate();
+  useEffect(() => {
+    console.log("Products Updated:", products);
+  }, [products]);
+  
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        console.log("Fetching products...");
+        const response = await Axios.get("api/users/products");
+        console.log("API Response:", response);
+    
+        if (response.status === 201) {
+          console.log("Updating products state...");
+          setProducts(response.data.data);
+        }
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+    
+    fetchProducts();
+  },  [ setProducts]);
+
+  
+
+  return (
+    <>
+      <Navbarfront />
+
+      <section id="all" style={{ backgroundColor: "#faf3dd" }}>
+        <div className="container py-5">
+          <div className="row row-cols-1 row-cols-md-2 row-cols-lg-5 g-4">
+            {
+              products.map((product) => (
+                <div className="col" key={product._id}>
+                  <div className="card shadow-sm h-100">
+                    <div className="d-flex justify-content-between p-3">
+                      <div
+                        id="animated-div"
+                        className="rounded-circle d-flex align-items-center justify-content-center shadow-1-strong"
+                        style={{
+                          width: "80px",
+                          height: "30px",
+                          marginBottom: "10px",
+                          marginRight: "10px",
+                        }}
+                      >
+                        <p className="text-white mb-0 small">In Offer</p>
+                      </div>
+                    </div>
+                    <img
+                      src={product.image}
+                      style={{ width: "200px", height: "150px" }}
+                      className="card-img-top d-flex align-items-center justify-content-center"
+                      alt={product.title}
+                    />
+
+                <div className="card-body">
+                    <div className="d-flex justify-content-center">
+                      <h5 >{product.title}</h5>
+                     
+                    </div>
+
+                    <div className="mb-3">
+                      <h5 className="text-dark mb-0">${product.price}</h5>
+                    </div>
+
+                      <Button
+                        variant="primary"
+                        className="ms-1 card-container"
+                        onClick={() =>
+                          navigate(`/displayProduct/${product._id}`)
+                        }
+                        type="submit"
+                      >
+                        View Details{" "}
+                        <i className="fas fa-shopping-cart ms-1"></i>
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+    </>
+  );
+};
+
+export default All;
