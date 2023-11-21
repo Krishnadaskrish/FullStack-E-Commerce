@@ -174,7 +174,7 @@ module.exports = {
 
     removeCartProduct: async (req, res) => {
       try {
-        const { userId } = req.params;
+        const  userId  = req.params.userId;
         const itemId = req.params.itemId;
     
         console.log('User ID:', userId);
@@ -193,10 +193,12 @@ module.exports = {
           { _id: userId },
           { $pull: { cart: { productsId: itemId } } }
         );
+
+        console.log("th----------------",result)
     
-        if (result.nModified > 0) {
+        if (result.modifiedCount > 0) {
           console.log("Item removed successfully");
-          return res.status(204).json({ message: "Product removed successfully", data: result });
+           res.status(204).json({ message: "Product removed successfully", data: result });
         } else {
           console.log("Item not found in the cart");
           return res.status(404).json({ message: "Item not found in the cart" });

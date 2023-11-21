@@ -27,6 +27,7 @@ export default function Cart() {
   
 
   const userId = localStorage.getItem("userID")
+  console.log(userId)
 
   // useEffect(()=>{
   //   setCartCount(localStorage.setItem('count',products.length))
@@ -56,8 +57,8 @@ export default function Cart() {
 const quantityUpdate = async (cartId,quantityChange)=>{
   const data =  {id :cartId,quantityChange } ;
   try {
-     await Axios.put(`/api/users/${id}/cart`,data);
-     const response = await Axios.get(`/api/users/${id}/cart`)
+     await Axios.put(`/api/users/${userId}/cart`,data);
+     const response = await Axios.get(`/api/users/${userId}/cart`)
      if (response.status === 200){
       return fechCart()
      }
@@ -75,7 +76,8 @@ const quantityUpdate = async (cartId,quantityChange)=>{
 const handleRemoveItem = async (itemId) => {
   try {
      
-     const response = await Axios.delete(`/api/users/${id}/cart/${itemId}`);
+     const response = await Axios.delete(`/api/users/${userId}/cart/${itemId}`);
+     console.log('this is ',userId)
      
     if (response.status === 204) {
        fechCart()
@@ -182,7 +184,7 @@ const handleRemoveItem = async (itemId) => {
 
                         <div className="flex-grow-1 ms-3">
                         <a
-                            href="#"
+                            href=""
                             className="float-end text-black"
                             onClick={() => handleRemoveItem(item.productsId._id)}
                           >

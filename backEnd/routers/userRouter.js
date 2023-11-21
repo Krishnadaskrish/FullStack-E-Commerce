@@ -16,7 +16,7 @@ userRouter.get('/products/category/:categoryname',VarifyToken,TryCatch(userContr
 userRouter.post('/:id/cart',VarifyToken,TryCatch(userController.addToCart))
 userRouter.get('/:id/cart',VarifyToken,TryCatch(userController.showCart))
 userRouter.put('/:id/cart',VarifyToken,TryCatch(userController.updateCartQuantity))
-userRouter.delete('/:id/cart/:itemId',VarifyToken,TryCatch(userController.removeCartProduct))
+userRouter.delete('/:userId/cart/:itemId',VarifyToken,TryCatch(userController.removeCartProduct))
 userRouter.post('/:id/wishList',VarifyToken,TryCatch(userController.wishList))
 userRouter.get('/:id/wishList',VarifyToken,TryCatch(userController.showWishList))
 userRouter.delete('/:id/wishList',VarifyToken,TryCatch(userController.deleteWishList))
