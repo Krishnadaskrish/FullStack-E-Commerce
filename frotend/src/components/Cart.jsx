@@ -29,9 +29,10 @@ export default function Cart() {
   const userId = localStorage.getItem("userID")
   console.log(userId)
 
-  // useEffect(()=>{
-  //   setCartCount(localStorage.setItem('count',products.length))
-  // },[])
+  useEffect(()=>{
+    setCartCount(localStorage.setItem('count',product.length))
+  },[])
+  console.log('this is ',product)
 
   //fetching cart items
   const fechCart = async () => {

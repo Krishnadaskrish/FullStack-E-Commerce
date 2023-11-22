@@ -50,7 +50,7 @@ function Login() {
          console.log( response.data.id)
          username === adminUsername && localStorage.setItem("role", "admin");
          localStorage.setItem("jwt_token", response.data.data);
-         localStorage.setItem("name", response.data.data.name);
+         localStorage.setItem("name", response.data.username);
          
          toast.success(response.data.message);
          navigate(username === adminUsername ? "/adminhome" : "/");

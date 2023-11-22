@@ -7,9 +7,12 @@ import { useNavigate } from "react-router";
 
 const All = () => {
   const [products, setProducts] = useState([]);
-  // const [data, setData] = useState([])
+  const cartCount = localStorage.getItem('count')
+  const userName = localStorage.getItem('name')
   
   console.log(products)
+
+  
   const navigate = useNavigate();
   useEffect(() => {
     console.log("Products Updated:", products);
@@ -44,6 +47,7 @@ const All = () => {
       <section id="all" style={{ backgroundColor: "#faf3dd" }}>
         <div className="container py-5">
           <div className="row row-cols-1 row-cols-md-2 row-cols-lg-5 g-4">
+            
             {
               products.map((product) => (
                 <div className="col" key={product._id}>
@@ -51,15 +55,11 @@ const All = () => {
                     <div className="d-flex justify-content-between p-3">
                       <div
                         id="animated-div"
-                        className="rounded-circle d-flex align-items-center justify-content-center shadow-1-strong"
-                        style={{
-                          width: "80px",
-                          height: "30px",
-                          marginBottom: "10px",
-                          marginRight: "10px",
-                        }}
+                        
+                        
                       >
-                        <p className="text-white mb-0 small">In Offer</p>
+                      <img src={require("../images/wishlist (4).png")} alt="" className="navIcons" onClick={()=>userName ? addToWishlist(product._id):alert('error ')}  />
+                        
                       </div>
                     </div>
                     <img
@@ -82,6 +82,7 @@ const All = () => {
                       <Button
                         variant="primary"
                         className="ms-1 card-container"
+                       
                         onClick={() =>
                           navigate(`/displayProduct/${product._id}`)
                         }
@@ -90,6 +91,7 @@ const All = () => {
                         View Details{" "}
                         <i className="fas fa-shopping-cart ms-1"></i>
                       </Button>
+                      
                     </div>
                   </div>
                 </div>
