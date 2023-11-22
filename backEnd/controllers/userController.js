@@ -287,29 +287,39 @@ module.exports = {
       });
     },
 
-    showWishList : async (req,res)=>{
-      const userId = req.params.id;
-      const wishList = await User.find({_id:userId}).populate('wishList');
-      
+    showWishlist: async (req, res) => {
+      console.log('........')
+      const userID = req.params.id
+      console.log(userID)
+      const user = await User.findById(userID).populate('wishList');
+      if (!user) { return res.status(404).json({ message: 'User not found' }) }
 
-      if(!wishList){res.status(404).json({error : "nothing to show in wish list"})}
-      res.status(201).json({
-        status : "success",
-        message : "products in wish list ",
-        data : wishList
-      })
-    },
+      res.status(200).json({
+          status: 'success',
+          message: 'Successfully fetched wishlist.',
+          data: user.wishList,
+      });
+  },
 
-    deleteWishList : async (req,res)=>{
-      const userId = req.params.id;
-      const productId = req.body.productId;
-      await User.updateOne({_id :userId},{$pull:{wishList:productId}})
-
-      res.status(201).json({
-        status : "success",
-        message : "wish list data deleted"
-      })
-   },
+  deleteFromWishlist: async (req, res) => {
+    const userId = req.params.id;
+    console.log('userid',userId)
+    const { productId } = req.body;
+    console.log('product id',productId)
+   
+  
+    if (!productId) {
+      return res.status(404).json({ message: "Product not Found" });
+    }
+  
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ status: "Failure", message: "User Not Found" });
+    }
+  
+    await User.updateOne({ _id: userId }, { $pull: { wishList: productId } });
+    res.status(200).json({ message: "Successfully removed from wishlist" });
+  },
 
    payment: async (req, res) => {
     const id = req.params.id;

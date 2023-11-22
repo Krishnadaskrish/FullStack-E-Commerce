@@ -18,6 +18,9 @@ function Navbarfront() {
   const navigate = useNavigate();
   const [searchTerm, setsearchTerm] = useState("");
   const [userName, setUserName] = useState("");
+  const userId = localStorage.getItem('userID')
+
+
   
   
   const {cart,isLog, setIsLog} = useContext(MyContext);
@@ -99,6 +102,7 @@ function Navbarfront() {
 <span class='badge badge-warning' id='lblCartCount'> 1 </span>
 
               </div>
+              <img src={require("../images/wishlist (4).png")} alt="" className="navIcons" onClick={()=>navigate(`/wishlist/${userId}`) } />
         </Navbar.Collapse>
       </Container>
    

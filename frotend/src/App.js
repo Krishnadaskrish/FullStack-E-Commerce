@@ -18,7 +18,7 @@ import Cloths from './Products/Cardcloth';
 import Others from './Products/Others';
 import Search from './components/Search';
 import Displaycart from './components/Displaycart';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Cart from './components/Cart';
 import AdminHome from './components/Admin/AdminHome';
 import Admin from './components/Admin/Admin';
@@ -28,8 +28,12 @@ import AddProduct from './components/Admin/Addproduct';
 import { userList } from './components/Admin/Dummyusers';
 import ViewUsers from './components/Admin/Adminuser';
 import Moredetails from './components/Admin/Moredetails';
+import UserWishlist from './components/UserWishlist'
 import env from "react-dotenv"
 import axios from 'axios';
+
+
+
 
 
 export const Axios = axios.create({
@@ -55,11 +59,36 @@ function App() {
   const [list,setList]=useState(userList)
   const [users, setUsers] = useState([])
   const [wishList,setWishList] = useState([])
+  const [wishStatus,setWishStatus] = useState(false)
   const userID = localStorage.getItem('userID')
   
   
   
   const [cartCount, setCartCount] = useState([])
+
+ 
+
+  
+      const fetchData = async ()=>{
+        try {
+          const response = await Axios.get(`api/users/${userID}/wishList`)
+          if(response.status === 200){
+            setWishList(response.data.data)
+            setWishStatus(true)
+          }
+          
+        } catch (error) {
+          console.log(error)
+          
+        }
+      }
+
+      useEffect(()=>{
+        fetchData()
+      },[userID,setWishList])
+     
+
+
 
   const addToWishlist = async (productId) => {
    
@@ -75,6 +104,21 @@ function App() {
       alert(error.response.data.message)
     }
   }
+
+  const Removewishlist = async (productId)=>{
+    try {
+        await Axios.delete(`/api/users/${userID}/wishList/${productId}`)
+        const response = await Axios.get(`/api/users/${userID}/wishList`)
+        if (response.status === 201){
+          alert('removed from wishlist')
+          setWishList(response.data.data)
+        }
+        
+    }catch (error) {
+        
+        alert(error.response.data.message)
+    }
+}
   
 
 
@@ -88,7 +132,7 @@ function App() {
     <>
     
      
-     <MyContext.Provider value={{cart,setcart,pro,setpro,isLog, setIsLog,list,users, setUsers,cartCount, setCartCount,addToWishlist,wishList,setWishList}}>
+     <MyContext.Provider value={{cart,setcart,pro,setpro,isLog, setIsLog,list,users, setUsers,cartCount, setCartCount,addToWishlist,wishList,setWishList,setWishStatus,wishStatus,fetchData,Removewishlist,userID}}>
       <Routes>
         
         <Route path='/' element={<Home/>}/>
@@ -113,6 +157,8 @@ function App() {
         <Route path ='/adminuser' element={<userList/>}/>
         <Route path ='/user' element={<ViewUsers/>}/>
         <Route path ='/More/:id' element={<Moredetails/>}/>
+        <Route path ='/wishlist/:id' element={<UserWishlist/>}/>
+        
         
         
      
