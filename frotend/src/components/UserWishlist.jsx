@@ -72,6 +72,7 @@ function  WishList (){
     return(
         
             <>
+            <Navbarfront/>
                <section className="products d-flex flex-column align-items-center mb-5" style={{ paddingTop: "80px" }}>
                   <h1 className="mt-5 text-black fw-bolder">
                      <span>My</span> Wishlist
