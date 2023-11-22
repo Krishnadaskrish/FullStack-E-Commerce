@@ -253,20 +253,38 @@ module.exports = {
         data:cart,
       });
     },
-
-    wishList : async (req,res)=>{
+    addToWishlist: async (req, res) => {
+      console.log('.........................')
       const userId = req.params.id;
-      const productId = req.body.productId;
-      console.log(productId);
-      await User.updateOne(
-        {_id : userId},
-        {$addToSet:{wishList : productId}}
-      )
-
+      if (!userId) {
+        return res
+          .status(404)
+          .json({ status: "Failear", message: "User Not Fount!" });
+      }
+  
+      const { productId } = req.body;
+      console.log(productId)
+      const prod = await Product.findById(productId);
+      if (!prod) {
+        return res
+          .status(404)
+          .json({ status: "Failear", message: "Product not found" });
+      }
+  
+      const findProd = await User.findOne({ _id: userId, wishList: productId });
+      if (findProd) {
+        return res
+          .status(409)
+          .json({ message: "Product already on your wishlist " });
+      }
+  
+      // console.log(prod);
+  
+      await User.updateOne({ _id: userId }, { $push: { wishList: prod } });
       res.status(201).json({
-        status :"success",
-        message : "product added to wish list "
-      })
+        status: "Success",
+        message: "Product Succesfuly added to wishList",
+      });
     },
 
     showWishList : async (req,res)=>{

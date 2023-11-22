@@ -1,14 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import Navbarfront from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Axios } from "../App";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
+import { MyContext } from "../context/Context";
+import {MDBIcon}from "mdb-react-ui-kit";
 
 const All = () => {
   const [products, setProducts] = useState([]);
   const cartCount = localStorage.getItem('count')
   const userName = localStorage.getItem('name')
+  const {addToWishlist} = useContext(MyContext)
+ 
+
+  const {id} = useParams()
   
   console.log(products)
 
@@ -40,6 +46,8 @@ const All = () => {
 
   
 
+  
+
   return (
     <>
       <Navbarfront />
@@ -58,7 +66,10 @@ const All = () => {
                         
                         
                       >
-                      <img src={require("../images/wishlist (4).png")} alt="" className="navIcons" onClick={()=>userName ? addToWishlist(product._id):alert('error ')}  />
+                     
+                  <img src={require("../images/wishlist (4).png")} alt="" className="navIcons" onClick={() => 
+                    userName ? addToWishlist(product._id): alert.error("Pleas login")
+                  } />   
                         
                       </div>
                     </div>

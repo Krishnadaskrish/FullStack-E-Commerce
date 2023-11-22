@@ -54,9 +54,28 @@ function App() {
   const [isLog, setIsLog] = useState(false);
   const [list,setList]=useState(userList)
   const [users, setUsers] = useState([])
-  const userId = localStorage.get
+  const [wishList,setWishList] = useState([])
+  const userID = localStorage.getItem('userID')
+  
+  
   
   const [cartCount, setCartCount] = useState([])
+
+  const addToWishlist = async (productId) => {
+   
+    try {
+      await Axios.post(`/api/users/${userID}/wishList`,{productId})
+      const response = await Axios.get(`api/users/${userID}/wishList`)
+      if(response.status === 201){
+        alert("Added to wishlist")
+        setWishList(response.data.data)
+
+      }
+    } catch (error) {
+      alert(error.response.data.message)
+    }
+  }
+  
 
 
   
@@ -69,7 +88,7 @@ function App() {
     <>
     
      
-     <MyContext.Provider value={{cart,setcart,pro,setpro,isLog, setIsLog,list,users, setUsers,cartCount, setCartCount}}>
+     <MyContext.Provider value={{cart,setcart,pro,setpro,isLog, setIsLog,list,users, setUsers,cartCount, setCartCount,addToWishlist,wishList,setWishList}}>
       <Routes>
         
         <Route path='/' element={<Home/>}/>
