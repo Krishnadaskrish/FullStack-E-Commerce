@@ -24,6 +24,7 @@ export default function Cart() {
   const [product,setProduct] = useState([])
   const {id} = useParams()
   const {cartCount, setCartCount}  = useContext(MyContext)
+  const [payment, setpayment] = useState([])
   
 
   const userId = localStorage.getItem("userID")
@@ -99,55 +100,72 @@ const handleRemoveItem = async (itemId) => {
   };
 
 
+  const handleCheckout = async ()=>{
+    try {
+
+      const response = await Axios.post(`/api/users/${userId}/payment`)
+      if(response.status === 200){
+            const url = response.data.url
+            const confirmation = window.confirm("Payment session created. Redirecting to the payment gateway. Continue?")
+            if(confirmation) window.location.replace(url)
+
+      }
+      
+    } catch (error) {
+          alert(error.response.data.message)
+    }
+  }
+
+
   
 
 
 
 
-  const removeItem = (itemId) => {
-    const updatedCart = cart.filter((item) => item.id !== itemId);
-    setcart(updatedCart);
-  };
+  // const removeItem = (itemId) => {
+  //   const updatedCart = cart.filter((item) => item.id !== itemId);
+  //   setcart(updatedCart);
+  // };
 
-  const [count, setCount] = useState(1);
+  // const [count, setCount] = useState(1);
 
-  const increaseCount = (itemId = null) => {
-    if(itemId) {
-    let cartItem = cart.filter(item => item?.id == itemId)[0];
-    const itemIndex=cart.findIndex(i => i?.id == itemId)
-    cart.splice(itemIndex, 1, {...cartItem, count: cartItem?.count+1});
-    setcart(() =>[...cart]);
-    }
+  // const increaseCount = (itemId = null) => {
+  //   if(itemId) {
+  //   let cartItem = cart.filter(item => item?.id == itemId)[0];
+  //   const itemIndex=cart.findIndex(i => i?.id == itemId)
+  //   cart.splice(itemIndex, 1, {...cartItem, count: cartItem?.count+1});
+  //   setcart(() =>[...cart]);
+  //   }
    
-  };
+  // };
 
-  const decreaseCount = (itemId = null) => {
-      if(itemId) {
-        let cartItem = cart.filter(item => item?.id == itemId)[0];
-        const itemIndex=cart.findIndex(i => i?.id == itemId)
-        if(cartItem.count>1){
-        cart.splice(itemIndex, 1, {...cartItem, count: cartItem?.count-1});
-        setcart(() =>[...cart]);
-        }
-        else{
-        cart.splice(itemIndex, 1);
-          setcart(()=>[...cart])
-        }
-        }
-  };
-  const calculateTotal = () => {
-    let total = 0;
+  // const decreaseCount = (itemId = null) => {
+  //     if(itemId) {
+  //       let cartItem = cart.filter(item => item?.id == itemId)[0];
+  //       const itemIndex=cart.findIndex(i => i?.id == itemId)
+  //       if(cartItem.count>1){
+  //       cart.splice(itemIndex, 1, {...cartItem, count: cartItem?.count-1});
+  //       setcart(() =>[...cart]);
+  //       }
+  //       else{
+  //       cart.splice(itemIndex, 1);
+  //         setcart(()=>[...cart])
+  //       }
+  //       }
+  // };
+  // const calculateTotal = () => {
+  //   let total = 0;
 
-    cart.forEach((item) => {
-      total += item.price * item.count;
-    });
+  //   cart.forEach((item) => {
+  //     total += item.price * item.count;
+  //   });
 
-    setTotal(total);
-  };
+  //   setTotal(total);
+  // };
 
-  useEffect(() => {
-    calculateTotal()
-  }, [cart])
+  // useEffect(() => {
+  //   calculateTotal()
+  // }, [cart])
 
 
   return (
@@ -241,15 +259,7 @@ const handleRemoveItem = async (itemId) => {
                       </div>
                     )
                     )}
-                    {cart.length ? (<span
-                            tag="h5"
-                            style={{ width: "100%" }}
-                            className="fw-bold mx-5 text-right"
-                          >
-                            Grand Total: {total?.toFixed(2)}$
-                          </span>) : null}
-                  </MDBCol>
-                  <MDBCol lg="5" className="px-5 py-4">
+                    
                     <MDBTypography
                       tag="h3"
                       className="mb-5 pt-2 text-center fw-bold text-uppercase"
@@ -257,57 +267,19 @@ const handleRemoveItem = async (itemId) => {
                       Payment
                     </MDBTypography>
 
-                    <form className="mb-5">
-                      <MDBInput
-                        className="mb-5"
-                        label="Card number"
-                        type="text"
-                        size="lg"
-                        defaultValue="1234 5678 9012 3457"
-                      />
+                    
 
-                      <MDBInput
-                        className="mb-5"
-                        label="Name on card"
-                        type="text"
-                        size="lg"
-                        defaultValue="John Smith"
-                      />
+                     
 
-                      <MDBRow>
-                        <MDBCol md="6" className="mb-5">
-                          <MDBInput
-                            className="mb-4"
-                            label="Expiration"
-                            type="text"
-                            size="lg"
-                            minLength="7"
-                            maxLength="7"
-                            defaultValue="01/22"
-                            placeholder="MM/YYYY"
-                          />
-                        </MDBCol>
-                        <MDBCol md="6" className="mb-5">
-                          <MDBInput
-                            className="mb-4"
-                            label="Cvv"
-                            type="text"
-                            size="lg"
-                            minLength="3"
-                            maxLength="3"
-                            placeholder="&#9679;&#9679;&#9679;"
-                            defaultValue="&#9679;&#9679;&#9679;"
-                          />
-                        </MDBCol>
-                      </MDBRow>
+                      
 
-                      <p className="mb-5">
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit
-                        <a href="#!"> obcaecati sapiente</a>.
-                      </p>
+                      
 
-                      <MDBBtn block size="lg">
+                      <MDBBtn block size="lg"
+                       onClick = {()=>handleCheckout()}
+                       >
                         Buy now
+                       
                       </MDBBtn>
                       
 
@@ -321,7 +293,7 @@ const handleRemoveItem = async (itemId) => {
                           Back to shopping
                         </a>
                       </MDBTypography>
-                    </form>
+                    
                   </MDBCol>
                 </MDBRow>
               </MDBCardBody>

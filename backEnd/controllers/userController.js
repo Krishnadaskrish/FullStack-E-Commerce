@@ -322,15 +322,16 @@ module.exports = {
   },
 
    payment: async (req, res) => {
-    const id = req.params.id;
-    uid = id; //for passing as global variable
-    const user = await User.findOne({ _id: id }).populate("cart"); //user with cart
+    console.log('........................')
+    const userId = req.params.id;
+    // uid = id; //for passing as global variable
+    const user = await User.findOne({ _id: userId }).populate("cart.productsId"); //user with cart
     if (!user) {
       return res.status(404).json({ message: "user not found " });
     }
     const cartItems = user.cart;
     if (cartItems.length === 0) {
-      return res.status(200).json({ message: "Your cart is empty" });
+      return res.status(200).json({ status : "success",message: "Your cart is empty" });
     }
 
     const lineItems = cartItems.map((item) => {
@@ -338,14 +339,16 @@ module.exports = {
         price_data: {
           currency: "inr",
           product_data: {
-            name: item.title,
-            description: item.description,
+            images : [item.productsId.image],
+            name: item.productsId.title,
+
           },
-          unit_amount: Math.round(item.price * 100), // when item.price only given ,error occur, why ? check its reason . why multiply 100
+          unit_amount: Math.round(item.productsId.price * 100), // when item.price only given ,error occur, why ? check its reason . why multiply 100
         },
-        quantity: 1,
+        quantity: item.quantity,
       };
     });
+    const totalAmount = lineItems.reduce((total,item)=>total + item.price_data.unit_amount * item.quantity,0);
     session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"], //, 'apple_pay', 'google_pay', 'alipay',card
       line_items: lineItems,
@@ -362,7 +365,7 @@ module.exports = {
     }
     sValue = {
       //values to be sent to success function
-      id,
+      userId,
       user,
       session,
     };
@@ -379,6 +382,7 @@ module.exports = {
 
     success : async (req,res)=>{
       const {id,user,session} = sValue ;
+      const userId = user._id;
       const cartItem = user.cart ; 
 
 
@@ -399,16 +403,25 @@ module.exports = {
       const orderId = order._id;
 
       const updateUser = await User.updateOne(
-        {_id : id},
+        {_id :userId },
         {
           $push:{orders :orderId },
            $set:{cart : []}
-          }
+          },
+          {new : true}
         );
 
-        res.status(201).json({
-          status :"success",
-          message : "paymentsuccesful"})
+        if (updateUser.nModified === 1){
+          res.status(200).json({
+            status: 'success',
+            message : "payment successful"
+          });
+        }else{
+          res.status(500).json({
+            status : "error",
+            message : "failed to update user data"
+          })
+        }
     },
 
     cancel: async (req, res) => {
@@ -430,7 +443,7 @@ module.exports = {
       const uOrder = user.orders; 
       
       if (!uOrder || uOrder.length === 0) {
-        return res.status(200).json({ message: "you have no orders to show" });
+        return res.status(200).json({ message: "you have no orders to show",data : [] });
       }
       const orderProductDetails = await orderSchema.find({ _id: { $in: uOrder } })
       .populate("products")
