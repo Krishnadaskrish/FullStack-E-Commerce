@@ -120,54 +120,6 @@ const handleRemoveItem = async (itemId) => {
   
 
 
-
-
-  // const removeItem = (itemId) => {
-  //   const updatedCart = cart.filter((item) => item.id !== itemId);
-  //   setcart(updatedCart);
-  // };
-
-  // const [count, setCount] = useState(1);
-
-  // const increaseCount = (itemId = null) => {
-  //   if(itemId) {
-  //   let cartItem = cart.filter(item => item?.id == itemId)[0];
-  //   const itemIndex=cart.findIndex(i => i?.id == itemId)
-  //   cart.splice(itemIndex, 1, {...cartItem, count: cartItem?.count+1});
-  //   setcart(() =>[...cart]);
-  //   }
-   
-  // };
-
-  // const decreaseCount = (itemId = null) => {
-  //     if(itemId) {
-  //       let cartItem = cart.filter(item => item?.id == itemId)[0];
-  //       const itemIndex=cart.findIndex(i => i?.id == itemId)
-  //       if(cartItem.count>1){
-  //       cart.splice(itemIndex, 1, {...cartItem, count: cartItem?.count-1});
-  //       setcart(() =>[...cart]);
-  //       }
-  //       else{
-  //       cart.splice(itemIndex, 1);
-  //         setcart(()=>[...cart])
-  //       }
-  //       }
-  // };
-  // const calculateTotal = () => {
-  //   let total = 0;
-
-  //   cart.forEach((item) => {
-  //     total += item.price * item.count;
-  //   });
-
-  //   setTotal(total);
-  // };
-
-  // useEffect(() => {
-  //   calculateTotal()
-  // }, [cart])
-
-
   return (
     <>
     <Navbarfront/>
