@@ -32,6 +32,10 @@ function  WishList (){
       }
     }
 
+    useEffect(()=>{
+      fetchData()
+    },[wishList])
+
     
 
 

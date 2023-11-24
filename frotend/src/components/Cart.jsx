@@ -84,13 +84,17 @@ const handleRemoveItem = async (itemId) => {
      console.log('this is ',userId)
      
     if (response.status === 204) {
-       fechCart()
+       await fechCart()
+       toast.success('Item removed successfully')
     }
   } catch (error) {
     console.error(error);
     alert('Error removing product from the cart');
   }
 };
+
+
+
 
 
   
@@ -157,7 +161,7 @@ const handleRemoveItem = async (itemId) => {
 
                         <div className="flex-grow-1 ms-3">
                         <a
-                            href=""
+                            href="#"
                             className="float-end text-black"
                             onClick={() => handleRemoveItem(item.productsId._id)}
                           >
