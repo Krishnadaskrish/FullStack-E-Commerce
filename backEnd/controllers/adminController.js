@@ -146,7 +146,7 @@ module.exports = {
         if (!product) {
           return res.status(404).json({ error: "Product not found" });
         }
-        await Product.updateOne(
+        const ProductData = await Product.updateOne(
           { _id: id },
           {
             $set: {
@@ -158,15 +158,18 @@ module.exports = {
             },
           }
         );
+        if(!ProductData){
+          return res.status(404).json({status : "faliure",message:"can not edit product"})
+        }
         res.status(201).json({
           status: "success",
           message: "Successfully updated the product.",
-          data :product
+          data :ProductData
         });
       },
 
       //delete product (DELETE api)
-      
+
       deleteProduct: async (req, res) => {
         const { id } = req.body;
         console.log(req.body, "hh");

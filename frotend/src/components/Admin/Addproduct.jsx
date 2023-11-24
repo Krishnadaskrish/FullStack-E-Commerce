@@ -64,10 +64,10 @@ export default function AddProduct() {
       
       if (response.status === 201) {
         
-        alert("Product added successfully!");
+        toast.success("Product added successfully!");
         navigate("/admin");
       } else {
-        alert("Failed to add product.");
+        toast.error("Failed to add product.");
       }
     } catch (error) {
       console.error("Error uploading product:", error);

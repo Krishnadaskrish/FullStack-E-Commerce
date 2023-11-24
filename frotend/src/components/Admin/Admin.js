@@ -59,7 +59,7 @@ export default function Admin() {
     };
 
     fetchProducts();
-  }, []);
+  }, [products]);
 
  
 
@@ -91,7 +91,7 @@ export default function Admin() {
               </td>
               <td>
               <button
-                    className="btn btn-danger mt-3"
+                    className="btn btn-danger me-4"
                     onClick={() => handleDeletes(product._id)}
                   >
                     Delete

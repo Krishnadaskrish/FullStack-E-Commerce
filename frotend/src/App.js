@@ -33,6 +33,7 @@ import env from "react-dotenv"
 import axios from 'axios';
 import Success from './components/Success';
 import Order from './components/Order';
+import toast, { Toaster } from "react-hot-toast";
 
 
 
@@ -98,30 +99,18 @@ function App() {
     try {
       await Axios.post(`/api/users/${userID}/wishList`,{productId})
       const response = await Axios.get(`api/users/${userID}/wishList`)
-      if(response.status === 201){
-        alert("Added to wishlist")
+
+      if(response.status === 200){
+        toast.success("Added to wishlist")
         setWishList(response.data.data)
 
       }
     } catch (error) {
-      alert(error.response.data.message)
+      toast.error(error.response.data.message)
     }
   }
 
-  const Removewishlist = async (productId)=>{
-    try {
-        await Axios.delete(`/api/users/${userID}/wishList/${productId}`)
-        const response = await Axios.get(`/api/users/${userID}/wishList`)
-        if (response.status === 201){
-          alert('removed from wishlist')
-          setWishList(response.data.data)
-        }
-        
-    }catch (error) {
-        
-        alert(error.response.data.message)
-    }
-}
+
   
 
 
@@ -134,8 +123,22 @@ function App() {
   return (
     <>
     
-     
-     <MyContext.Provider value={{cart,setcart,pro,setpro,isLog, setIsLog,list,users, setUsers,cartCount, setCartCount,addToWishlist,wishList,setWishList,setWishStatus,wishStatus,fetchData,Removewishlist,userID}}>
+    <MyContext.Provider value={{
+      cart,setcart,
+      pro,setpro,
+      isLog,setIsLog,
+      list,
+      users,setUsers,
+      cartCount,setCartCount,
+      addToWishlist,
+      wishList,setWishList,
+      setWishStatus,wishStatus,
+      fetchData,
+      userID}}
+      >
+      
+      
+      <Toaster/>
       <Routes>
         
         <Route path='/' element={<Home/>}/>
@@ -164,11 +167,7 @@ function App() {
         <Route path ='/success' element={<Success/>}/>
         <Route path ='/order/:id' element={<Order/>}/>
         
-        
-        
-     
-
-      </Routes>
+        </Routes>
       
       </MyContext.Provider>
       

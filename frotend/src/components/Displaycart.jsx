@@ -13,6 +13,7 @@ import {
   } from "mdb-react-ui-kit";
   import Navbarfront from "./Navbar";
 import { Axios } from "../App";
+import toast from "react-hot-toast";
 
 
   export default function Displaycart(){
@@ -53,7 +54,7 @@ import { Axios } from "../App";
       })
       if (response.status === 200){
         
-        alert("Product added to the cart!")
+        toast.success("Product added to the cart!")
         navigate("/Cart/:id")
 
       }

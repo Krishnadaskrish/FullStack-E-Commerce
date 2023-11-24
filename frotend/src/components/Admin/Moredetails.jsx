@@ -26,7 +26,7 @@ import { Axios } from '../../App';
 export default function Moredetails() {
    
     const { id } = useParams();
-    const [users,setUsers] = useState(null);
+    const [user,setUsers] = useState(null);
     const [loading , setLoading] = useState(true);
 
 
@@ -52,83 +52,63 @@ export default function Moredetails() {
       return <p>Loading...</p>; // You can replace this with a loading spinner or animation
     }
   
-    if (!users) {
+    if (!user) {
       return <h1 style={{ textAlign: 'center', marginTop: 70 }}>User not found</h1>;
     }
 
 
   return (
     <>
-    <section style={{ backgroundColor: '#eee' }}>
-      <MDBContainer className="py-5">
-       
-
-        <MDBRow>
-          {/* <MDBCol lg="4">
-            <MDBCard className="mb-4">
-              <MDBCardBody className="text-center">
-                <MDBCardImage
-                  src={us.product.image}
-                  alt="avatar"
-                  className="rounded-circle"
-                  style={{ width: '150px' }}
-                  fluid />
-                <p className="text-muted mb-1">{us.product.name}</p>
-                <p className="text-muted mb-4">{us.product.description}</p>
-                <div className="d-flex justify-content-center mb-2">
-                  <MDBBtn>${us.product.price}</MDBBtn>
-                  <MDBBtn outline className="ms-1">{us.id}</MDBBtn>
-                </div>
-              </MDBCardBody>
-            </MDBCard>
-
-     
-          </MDBCol> */}
-          <MDBCol lg="8">
-            <MDBCard className="mb-4">
-              <MDBCardBody>
-                <MDBRow>
-                  <MDBCol sm="3">
-                    <MDBCardText>{users.username}</MDBCardText>
-                  </MDBCol>
-                  <MDBCol sm="9">
-                    <MDBCardText className="text-muted"></MDBCardText>
-                  </MDBCol>
-                </MDBRow>
-                <hr />
-                <MDBRow>
-                  <MDBCol sm="3">
-                    <MDBCardText> {users.email}</MDBCardText>
-                  </MDBCol>
-                  
-                </MDBRow>
-                <hr />
-                <MDBRow>
-                  <MDBCol sm="3">
-                    {/* <MDBCardText>Phone number:  {us.phone}</MDBCardText> */}
-                  </MDBCol>
-                  
-                </MDBRow>
-                <hr />
-                
-                
-                <MDBRow>
-                  <MDBCol sm="3">
-                    <MDBCardText></MDBCardText>
-                  </MDBCol>
-                  <MDBCol sm="9">
-                    {/* <MDBCardText className="text-muted">Address:   {us.address.street},{us.address.city},{us.address.postalCode},{us.address.state},{us.address.country}</MDBCardText> */}
-                  </MDBCol>
-                </MDBRow>
-              </MDBCardBody>
-            </MDBCard>
-
-           
-          </MDBCol>
-        </MDBRow>
-      </MDBContainer>
-    </section>
-    </>
-  );
+     <div className="d-flex flex-column align-items-center pt-3">
+         <div className="d-flex align-items-center gap-3">
+            <MDBIcon fas icon="user-circle" className="text-muted" style={{ fontSize: "100px" }} />
+            <div className="d-flex flex-column">
+               <h3>{user.username}</h3>
+               <h6>{user.email}</h6>
+            </div>
+         </div>
+         <div className="dashboard-table mt-4 user-details-admin px-5">
+            <table className="w-100">
+               <thead className="text-center">
+                  <tr>
+                     <td>Order ID</td>
+                     <td>Date</td>
+                     <td>Product Name</td>
+                     <td>Payment ID</td>
+                     <td>Total Price</td>
+                  </tr>
+               </thead>
+               <tbody className="text-center">
+                  {user.orders.length > 0 ? (
+                     user.orders.map((order, index) => (
+                        <React.Fragment key={order._id}>
+                           <tr>
+                              <th rowSpan={order.product.length}>{order.orders_id.slice(-10)}</th>
+                              <th rowSpan={order.product.length}>{order.date}</th>
+                              <th>{order.product[0].title}</th>
+                              <th rowSpan={order.product.length}>{order.payment_id.slice(-10)}</th>
+                              {/* <th rowSpan={order.products.length}>{handlePrice(order.total_amount)}</th>  */}
+                           </tr>
+                           {order.product.slice(1).map((product) => (
+                              <tr key={product._id}>
+                                 <th>{product.title}</th>
+                              </tr>
+                           ))}
+                        </React.Fragment>
+                     ))
+                  ) : (
+                     <tr>
+                        <td colSpan="5">
+                           <h3>No Orders</h3>
+                        </td>
+                     </tr>
+                  )}
+               </tbody>
+            </table>
+         </div>
+      </div>
+      </>
+   );
+  
 }
 

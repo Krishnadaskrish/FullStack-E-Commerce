@@ -18,7 +18,7 @@ const Cloths = () => {
     const fetchproduct = async ()=>{
       try {
 
-       const response = Axios.get(`/api/users/products/category/:clothing`)
+       const response = Axios.get(`/api/users/products/category`)
        if (response.status === 201) {
         console.log("Updating products state...");
         setProduct(response.data.data);

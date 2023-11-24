@@ -2,6 +2,7 @@ import React  from 'react'
 import { useState,useEffect } from "react"
 import { useNavigate } from 'react-router'
 import { Axios } from '../App'
+import toast from 'react-hot-toast'
 
 
 function Success() {
@@ -15,7 +16,7 @@ function Success() {
              try {
                 const response = await Axios.get(`/api/users/payment/success`);
                 if(response.status === 200 && isSuccess)
-                alert("Payment successful");
+                toast.success("Payment successful");
             navigate("/");
             
              } catch (error) {

@@ -15,6 +15,7 @@ import { MyContext } from "../context/Context";
 import { useNavigate, useParams } from "react-router-dom";
 import Navbarfront from "./Navbar";
 import { Axios } from "../App";
+import toast from "react-hot-toast";
 
 
 export default function Cart() {
@@ -42,6 +43,7 @@ export default function Cart() {
       console.log(response)
       if(response.status === 201){
         setProduct(response.data.data.cart)
+        
       }
 
      
@@ -54,7 +56,7 @@ export default function Cart() {
   useEffect(() => { 
     fechCart()
 
-},[])
+},[product])
 
 const quantityUpdate = async (cartId,quantityChange)=>{
   const data =  {id :cartId,quantityChange } ;

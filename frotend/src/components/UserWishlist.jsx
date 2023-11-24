@@ -1,9 +1,10 @@
-import React, { useContext, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import Navbarfront from "../components/Navbar";
 import { Axios } from "../App";
 import { useNavigate } from "react-router";
 import { MDBIcon } from "mdb-react-ui-kit";
 import { MyContext } from "../context/Context";
+import toast from "react-hot-toast";
 
 
 
@@ -31,6 +32,8 @@ function  WishList (){
       }
     }
 
+    
+
 
 
     const removeFromWishlist = async (productId) => {
@@ -43,7 +46,7 @@ function  WishList (){
           });
          console.log(response)
          if(response.status === 200) {
-            alert(response.data.message)
+            toast.success(response.data.message)
             await fetchData()
          }
       } catch (error) {

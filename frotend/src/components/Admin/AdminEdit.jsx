@@ -58,12 +58,12 @@ try {
     );
     setProducts(updatedProducts);
 
-    alert('Product edited successfully');
+    toast.success(response.data.message);
     navigate(`/admin`);
   }
 } catch (error) {
-  console.error('Error editing product:', error);
-  toast.error('Failed to edit product.');
+  console.error(error);
+  
 }
 };
 
