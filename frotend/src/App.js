@@ -31,6 +31,9 @@ import Moredetails from './components/Admin/Moredetails';
 import UserWishlist from './components/UserWishlist'
 import env from "react-dotenv"
 import axios from 'axios';
+import Success from './components/Success';
+import Order from './components/Order';
+
 
 
 
@@ -158,6 +161,8 @@ function App() {
         <Route path ='/user' element={<ViewUsers/>}/>
         <Route path ='/More/:id' element={<Moredetails/>}/>
         <Route path ='/wishlist/:id' element={<UserWishlist/>}/>
+        <Route path ='/success' element={<Success/>}/>
+        <Route path ='/order/:id' element={<Order/>}/>
         
         
         

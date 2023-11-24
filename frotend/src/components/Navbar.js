@@ -80,12 +80,15 @@ function Navbarfront() {
           </Nav>
           
           {isLog ? (
-       <MDBBtn onClick={handleLogout}   
+       <MDBBtn onClick={handleLogout}
+          
       
        style={{background:'#6CA0DC',color:'#003153'}}
        
-       type="button">LOgout</MDBBtn>):(<MDBBtn onClick={handleLogIn}  style={{background:'#6CA0DC',color:'#003153'}} >login</MDBBtn>)}
-<img src={require("../images/user(4).png")} alt="" className="navIcons" />
+       type="button">LOgout</MDBBtn>): ( 
+      //  <MDBBtn className='me-5' onClick={handleLogIn}  style={{background:'#6CA0DC',color:'#003153'}} >login</MDBBtn>)}
+      <img src={require("../images/enter.png")} alt="" className="navIcons me-5" onClick={handleLogIn } style={{height:"35px",width:"40px"}} />)}
+{/* <img src={require("../images/user(4).png")} alt="" className="navIcons" />
               <li class="nav-item">
                 
               {isLog ? (
@@ -96,13 +99,17 @@ function Navbarfront() {
                 ) : (
                   ""
                 )}
-              </li>
-              <div>
-              <i class="fa" style={{fontSize:'24px', color: '#6CA0DC'}} onClick={() => navigate('/Cart/:id')}>&#xf07a;</i>
-<span class='badge badge-warning' id='lblCartCount'> 1 </span>
+              </li> */}
+              {/* <div>
+              <i className="fa me-2" style={{fontSize:'24px', color: '#6CA0DC'}} onClick={() => navigate('/Cart/:id')}>&#xf07a;</i>
+<span className='badge badge-warning me-5 ' id='lblCartCount'> 1 </span>
+<span></span>
 
-              </div>
-              <img src={require("../images/wishlist (4).png")} alt="" className="navIcons" onClick={()=>navigate(`/wishlist/${userId}`) } />
+              </div> */}
+              
+              <img src={require("../images/grocery-store.png")} alt="" className="navIcons me-5" onClick={() => navigate('/Cart/:id')}  />
+              <img src={require("../images/shopping-bag.png")} alt="" className="navIcons me-5"  onClick={()=>navigate(`/order/${userId}`)} />
+              <img src={require("../images/add-to-favorites (1).png")} alt="" className="navIcons me-5" onClick={()=>navigate(`/wishlist/${userId}`) } />
         </Navbar.Collapse>
       </Container>
    

@@ -24,6 +24,7 @@ let sValue = {};
 
 module.exports = {
 
+     //user registration (POST api)
 
     createUser: async (req, res) => {
         const { value, error } = joiUserSchema.validate(req.body);
@@ -44,11 +45,11 @@ module.exports = {
           message: "user registration successfull.",
         });
 
-        //
+        
     },
 
     //user Login (POST api /users/login)
-    //
+    
 
     userLongin: async (req, res) => {
       const { value, error } = joiUserSchema.validate(req.body);
@@ -57,10 +58,8 @@ module.exports = {
         return res.status(400).json({status:'error',message:error.message});
       }
      
-
       const { username, password } = value;
       const user = await User.findOne({ username: username });
-      console.log(user);
       const id = user.id
       
       if (!user) {
@@ -88,10 +87,12 @@ module.exports = {
        data: token,username,id });
     },
 
+    //get all product (GET api)
+
     productList : async (req,res)=>{
-      // console.log('...........')
+      
       const product = await Product.find();
-      // console.log(product)
+      
       if(product.length === 0){
         return res.status(400).json({message:"no product"})
       }
@@ -101,6 +102,8 @@ module.exports = {
         data: product
       })
     },
+
+    //get product by id (GET api)
 
     productGetById :  async (req,res)=>{
       const Id = req.params.id
@@ -115,6 +118,8 @@ module.exports = {
       })
       
     },
+
+    //get product by category (GET api)
 
     ProductByCategory: async (req, res) => {
       console.log('cara')
@@ -131,10 +136,13 @@ module.exports = {
       });
     },
 
+    //add to cart (Post api)
+
     addToCart: async (req, res) => {
+
       const userId = req.params.id;
-      console.log(userId);
       const user = await User.findById(userId);
+
       if (!user) {
         return res.status(404).send({
           status: "Failure",
@@ -152,6 +160,7 @@ module.exports = {
       }
     
       // Check if the product is already in the cart
+
       const isProductInCart = user.cart.some(item => item.productsId.equals(producId));
     
       if (isProductInCart) {
@@ -172,13 +181,14 @@ module.exports = {
       });
     },
 
+    //remove from the cart (DELETE api)
+
     removeCartProduct: async (req, res) => {
       try {
         const  userId  = req.params.userId;
         const itemId = req.params.itemId;
     
-        console.log('User ID:', userId);
-        console.log('Item ID:', itemId);
+        
     
         if (!itemId) {
           return res.status(404).json({ message: "Product Not found" });
@@ -194,7 +204,7 @@ module.exports = {
           { $pull: { cart: { productsId: itemId } } }
         );
 
-        console.log("th----------------",result)
+       
     
         if (result.modifiedCount > 0) {
           console.log("Item removed successfully");
@@ -209,12 +219,15 @@ module.exports = {
       }
     },
 
+    
+    //update quantity (PUT api)
+
 
     updateCartQuantity : async(req,res)=>{
-      console.log('.......')
+      
 
       const userId = req.params.id;
-      console.log(userId)
+      
       const {id,quantityChange} = req.body;
       
       const user = await User.findById(userId);
@@ -237,13 +250,15 @@ module.exports = {
 
 
     },
+
+    // get cart product (GET Api)
     
     
     showCart: async (req, res) => {
-      console.log('cart')
+     
       const userId = req.params.id;
       const cart = await User.findOne({ _id: userId }).populate("cart.productsId");
-      console.log(cart)
+    
       if (!cart) {
         return res.status(404).json({ error: "Nothing to show on Cart" });
       }
@@ -253,8 +268,11 @@ module.exports = {
         data:cart,
       });
     },
+
+    //added to cart (POST api)
+
     addToWishlist: async (req, res) => {
-      console.log('.........................')
+      
       const userId = req.params.id;
       if (!userId) {
         return res
@@ -263,7 +281,7 @@ module.exports = {
       }
   
       const { productId } = req.body;
-      console.log(productId)
+      
       const prod = await Product.findById(productId);
       if (!prod) {
         return res
@@ -278,7 +296,7 @@ module.exports = {
           .json({ message: "Product already on your wishlist " });
       }
   
-      // console.log(prod);
+     
   
       await User.updateOne({ _id: userId }, { $push: { wishList: prod } });
       res.status(201).json({
@@ -287,8 +305,10 @@ module.exports = {
       });
     },
 
+    //show wish list products (GET api)
+
     showWishlist: async (req, res) => {
-      console.log('........')
+      
       const userID = req.params.id
       console.log(userID)
       const user = await User.findById(userID).populate('wishList');
@@ -300,6 +320,8 @@ module.exports = {
           data: user.wishList,
       });
   },
+
+  //Remove product from wishlist (DELETE api)
 
   deleteFromWishlist: async (req, res) => {
     const userId = req.params.id;
@@ -321,10 +343,12 @@ module.exports = {
     res.status(200).json({ message: "Successfully removed from wishlist" });
   },
 
+  //payment section ( POST api)
+
    payment: async (req, res) => {
-    console.log('........................')
+  
     const userId = req.params.id;
-    // uid = id; //for passing as global variable
+    
     const user = await User.findOne({ _id: userId }).populate("cart.productsId"); //user with cart
     if (!user) {
       return res.status(404).json({ message: "user not found " });
@@ -350,10 +374,10 @@ module.exports = {
     });
     const totalAmount = lineItems.reduce((total,item)=>total + item.price_data.unit_amount * item.quantity,0);
     session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"], //, 'apple_pay', 'google_pay', 'alipay',card
+      payment_method_types: ["card"],  // 'apple_pay', 'google_pay', 'alipay',card
       line_items: lineItems,
       mode: "payment",
-      success_url: `http://localhost:3003/api/users/payment/success`, // Replace with your success URL
+      success_url: `http://localhost:3000/success`, // Replace with your success URL
       cancel_url: "http://localhost:3003/api/users/payment/cancel", // Replace with your cancel URL
     });
 
@@ -380,18 +404,20 @@ module.exports = {
 
     },
 
+    //success payment (POST api)
+
     success : async (req,res)=>{
       const {id,user,session} = sValue ;
       const userId = user._id;
       const cartItem = user.cart ; 
+        const productIds = cartItem.map((item) => item.productsId);
 
 
       const order = await orderSchema.create({
         userId : id ,
-        products : cartItem.map(
-          (value)=> new mongoose.Types.ObjectId(value._id)
+        product : productIds,
   
-          ) , //we get product in cart
+  
           order_id: session.id,
           payment_id: `demo ${Date.now()}`,
           total_amount: session.amount_total / 100,
@@ -424,41 +450,40 @@ module.exports = {
         }
     },
 
+    // cancel payment 
+
     cancel: async (req, res) => {
       res.status(200).json({
         status: "Success",
         message: "Payment cancelled.",
       });
     },
+
+    //show orederd products (GET api)
      
     showOrders: async (req, res) => {
-      
-      const id = req.params.id;
-      const user = await userSchema.findById(id).populate("orders");
-      if (!user) {
-        return res
-          .status(404)
-          .json({ status: "Failure", message: "User not found." });
-      }
-      const uOrder = user.orders; 
-      
-      if (!uOrder || uOrder.length === 0) {
-        return res.status(200).json({ message: "you have no orders to show",data : [] });
-      }
-      const orderProductDetails = await orderSchema.find({ _id: { $in: uOrder } })
-      .populate("products")
-       
-      
-      res.status(200).json({
-        status: "Success.",
-        message: "Fetched Order Details",
-        orderProductDetails,
+      const userID = req.params.id
+      const user = await User.findById(userID).populate('orders');
+      if (!user) { return res.status(404).json({ message: 'User not found' }) }
+
+      const userOrders = user.orders;
+      if (userOrders.length === 0) { return res.status(404).json({ message: 'You have no orders' }) }
+
+      const orderDetails = await orderSchema.find({ _id: { $in: userOrders } })
+      .populate('product');
+
+      res.status(201).json({
+          status: 'success',
+          message: 'Successfully fetched order details.',
+           orderDetails,
+          
       });
-    },
+  }
+}
 
 
 
-    }
+    
 
     
 

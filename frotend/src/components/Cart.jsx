@@ -237,7 +237,7 @@ const handleRemoveItem = async (itemId) => {
 
                       <MDBTypography
                         tag="h5"
-                        className="fw-bold mb-5"
+                        className="fw-bold "
                         style={{ position: "absolute", bottom: "0" }}
                       >
                         <a href="#!" onClick={handleBackToShopping}>

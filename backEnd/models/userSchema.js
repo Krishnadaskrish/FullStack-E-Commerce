@@ -10,8 +10,9 @@ const userSchema = new mongoose.Schema({
         quantity:{type:Number,default:1}}],
 
     wishList :[{type :mongoose.Schema.ObjectId,ref :'products'}],
-    orders: [],
-})
+    orders: [{ type: mongoose.Schema.Types.ObjectId, ref: "orders" }],
+});
+
 
 userSchema.pre('save',async function (next){
     const user = this;

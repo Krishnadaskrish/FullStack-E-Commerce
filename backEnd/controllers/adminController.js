@@ -50,7 +50,7 @@ module.exports = {
         })
     },
 
-    //get users by ID
+    //get users by ID (GET api)
 
     getUserByid: async (req, res) => {
       console.log(req.body)
@@ -65,6 +65,8 @@ module.exports = {
           data: user,
         });
       },
+
+      //create a product (POST api)
 
       createProduct : async (req,res)=>{
         console.log(req.body)
@@ -89,6 +91,8 @@ module.exports = {
 
       },
 
+      //get all products (GET api)
+
       getAllProduct : async(req, res)=>{
         console.log(req.body)
         const getAllProduct = await  Product.find();
@@ -99,6 +103,8 @@ module.exports = {
           data : getAllProduct
         })
       },
+
+      //get product by category (GET api)
 
       getProductsByCatogory: async (req, res) => {
         const categ = req.query.name;
@@ -114,6 +120,8 @@ module.exports = {
         });
       },
 
+      //get product by id (GET api)
+
       getProductById: async (req, res) => {
         const productId = req.params.id;
         const product = await Product.findById(productId);
@@ -127,8 +135,11 @@ module.exports = {
         });
       },
 
+
+      //update product (PUT api)
+
       updateProduct: async (req, res) => {
-        console.log("----------------------------------------------------")
+        
         const { title, description, image, price, category, id } = req.body;
         console.log(req.body)
         const product = await Product.findById(id);
@@ -153,6 +164,9 @@ module.exports = {
           data :product
         });
       },
+
+      //delete product (DELETE api)
+      
       deleteProduct: async (req, res) => {
         const { id } = req.body;
         console.log(req.body, "hh");
@@ -167,6 +181,7 @@ module.exports = {
       }
       ,
 
+      // order details (GET api)
 
       orderDetails : async (req,res)=>{
         const order = await orderSchema.find();
@@ -177,6 +192,8 @@ module.exports = {
 
         res.status(201).json({status : "success",message : "oreder successfully fetched",data : order})
       },
+
+      // stats (GET api)
 
       stats : async (req,res) => {
         const order = await orderSchema.find();

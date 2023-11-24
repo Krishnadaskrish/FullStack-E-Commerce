@@ -77,6 +77,7 @@ function  WishList (){
                   <h1 className="mt-5 text-black fw-bolder">
                      <span>My</span> Wishlist
                   </h1>
+                  <br/>
       
                   <div className="product-content">
                      {wishList.length !== 0 ? (
