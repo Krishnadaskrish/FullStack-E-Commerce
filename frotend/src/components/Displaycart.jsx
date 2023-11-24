@@ -71,44 +71,7 @@ import toast from "react-hot-toast";
 
 
 
-  const viewProduct=pro.filter((pro)=>pro.id===parseInt(id));
 
-   if(!viewProduct){
-    //product is found
-    return <h1 style={{ textAlign: "center" }}>Product not found</h1>;}
-
-    const incresecount = () => {
-        setcount(count + 1);
-      };
-    
-      const decresecount = () => {
-        if (count > 1) {
-            setcount(count - 1);
-        }
-
-      };
-
-    
-   
-    const handleToCart=()=>{
-  console.log(cart);
-      let cartItem = cart.filter(item => item?.id == id)[0];
-      const itemIndex=cart.findIndex(i => i?.id == id)
-      console.log(cartItem, itemIndex);
-      if(cartItem) {
-      cart.splice(itemIndex, 1, {...cartItem, count: cartItem?.count + count});
-      } else {
-      cart.push({...viewProduct[0], count: viewProduct[0]?.count + count});
-      }
-      setcart(() =>[...cart]);
-
-        alert('product successfully added to the cart')
-        navigate('/Cart')
-
-        };
-        const handleBuyNow = () => {
-            navigate('/Cart');
-      };
 
           
         return (
@@ -134,11 +97,11 @@ import toast from "react-hot-toast";
                 <strong>Price:</strong> ₹{product.price}
               </MDBCardText>
               <div className="d-flex align-items-center">
-                <MDBBtn color="primary" className="me-2" onClick={decresecount}>
+                <MDBBtn color="primary" className="me-2" >
                   -
                 </MDBBtn>
                 <span className="me-2">{count}</span>
-                <MDBBtn color="primary" onClick={incresecount}>
+                <MDBBtn color="primary" >
                 +
                 </MDBBtn>
               </div>
@@ -151,7 +114,7 @@ import toast from "react-hot-toast";
           
             <br/>
             <br/>
-              <MDBBtn color="success" onClick={handleBuyNow}>
+              <MDBBtn color="success" >
                 Buy Now
               </MDBBtn>
             </MDBCardBody>

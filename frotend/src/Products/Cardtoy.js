@@ -43,7 +43,9 @@ useEffect(() => {
               <Card
                 key={pro.id}
                 style={{ width: '20%', marginBottom: '10px', marginRight: '10px' }}
-                onClick={() => navigate(`/displayProduct/${pro.id}`)}
+                onClick={() =>
+                  navigate(`/displayProduct/${pro._id}`)
+                }
                 className='card-container'
               >
                 <Card.Img className='card-img-top' src={pro.image} />
