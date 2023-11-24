@@ -122,19 +122,20 @@ module.exports = {
     //get product by category (GET api)
 
     ProductByCategory: async (req, res) => {
-      console.log('cara')
+      console.log('cara');
       const Category = req.params.categoryname;
+      console.log('my catea', Category);
       const products = await Product.find({ category: Category });
+      console.log(products,"...")
     
-      if (!products) {
-        return res.status(404).json({ error: "Category not found" });
-      }
-      res.status(201).json({
+      res.status(200).json({
         status: "success",
         message: "Successfully fetched category details.",
-        data: products,
+         data:products , // Return an empty array if no products found
       });
     },
+    
+    
 
     //add to cart (Post api)
 

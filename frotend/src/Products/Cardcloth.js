@@ -13,27 +13,24 @@ const Cloths = () => {
   const [pro,setProduct] = useState([])
   console.log(pro)
   const navigate = useNavigate();
+  const Category = 'clothing'
  
-  useEffect(()=>{
-    const fetchproduct = async ()=>{
+  useEffect(() => {
+    const fetchProduct = async () => {
       try {
-
-       const response = Axios.get(`/api/users/products/category`)
-       if (response.status === 201) {
-        console.log("Updating products state...");
-        setProduct(response.data.data);
-
-      }
-
-      console.log(response.data.data)
-        
+        const response = await Axios.get(`/api/users/products/category/${Category}`);
+        if (response.status === 200) {
+          console.log("Updating products state...");
+          setProduct(response.data.data);
+        }
       } catch (error) {
-        console.log("error")
-        
+        console.error("Error fetching product:", error);
       }
-    }
-    fetchproduct()
-  },[ setProduct])
+    };;
+  
+    fetchProduct();
+  }, []); // or [setProduct] if setProduct is being used inside the useEffect block
+  
 
 
   return (
