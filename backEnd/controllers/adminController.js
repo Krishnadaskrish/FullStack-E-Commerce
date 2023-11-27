@@ -172,7 +172,7 @@ module.exports = {
 
       deleteProduct: async (req, res) => {
         const { id } = req.body;
-        console.log(req.body, "hh");
+        
       
         const deletePro = await Product.findByIdAndDelete(id);
         console.log(deletePro)
