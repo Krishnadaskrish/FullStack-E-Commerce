@@ -58,9 +58,7 @@ function Orders() {
                                  <th>
                                     <span>Ordered on</span> <br /> {singleOrder.date}
                                  </th>
-                                 {/* <th>
-                                    <span>Price</span> <br /> {handlePrice(product.price)}
-                                 </th> */}
+                                 
                               </tr>
                            ))}
                         </React.Fragment>

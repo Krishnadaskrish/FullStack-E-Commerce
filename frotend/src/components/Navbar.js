@@ -86,7 +86,7 @@ function Navbarfront() {
        style={{background:'#6CA0DC',color:'#003153'}}
        
        type="button">LOgout</MDBBtn>): ( 
-      //  <MDBBtn className='me-5' onClick={handleLogIn}  style={{background:'#6CA0DC',color:'#003153'}} >login</MDBBtn>)}
+  
       <img src={require("../images/enter.png")} alt="" className="navIcons me-5" onClick={handleLogIn } style={{height:"35px",width:"40px"}} />)}
 {/* <img src={require("../images/user(4).png")} alt="" className="navIcons" />
               <li class="nav-item">
@@ -100,12 +100,7 @@ function Navbarfront() {
                   ""
                 )}
               </li> */}
-              {/* <div>
-              <i className="fa me-2" style={{fontSize:'24px', color: '#6CA0DC'}} onClick={() => navigate('/Cart/:id')}>&#xf07a;</i>
-<span className='badge badge-warning me-5 ' id='lblCartCount'> 1 </span>
-<span></span>
-
-              </div> */}
+             
               
               <img src={require("../images/grocery-store.png")} alt="" className="navIcons me-5" onClick={() => navigate('/Cart/:id')}  />
               <img src={require("../images/shopping-bag.png")} alt="" className="navIcons me-5"  onClick={()=>navigate(`/order/${userId}`)} />

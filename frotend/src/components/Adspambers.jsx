@@ -1,7 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import Navbarfront from "../components/Navbar";
-import Footer from '../components/Footer';
 import { MDBTypography, MDBIcon } from 'mdb-react-ui-kit';
 
 const Card = ({ imageSrc, title }) => {

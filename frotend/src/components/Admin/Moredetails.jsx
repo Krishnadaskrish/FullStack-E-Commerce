@@ -87,7 +87,7 @@ export default function Moredetails() {
                               <th rowSpan={order.product.length}>{order.date}</th>
                               <th>{order.product[0].title}</th>
                               <th rowSpan={order.product.length}>{order.payment_id.slice(-10)}</th>
-                              {/* <th rowSpan={order.products.length}>{handlePrice(order.total_amount)}</th>  */}
+                        
                            </tr>
                            {order.product.slice(1).map((product) => (
                               <tr key={product._id}>

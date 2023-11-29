@@ -61,7 +61,7 @@ import toast from "react-hot-toast";
       
     } catch (error) {
       console.error('Error adding product to the cart:', error);
-      // toast.error(error.response.data.message)
+      
     }
   };
 
