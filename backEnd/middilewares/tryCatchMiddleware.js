@@ -4,9 +4,9 @@ const trycatchmiddleware = (trycatchhandler) => {
         await trycatchhandler(req, res, next);
       } catch (error) {
         next(error);
-        //
+        
         //  TODO add error handling middleware
-        //
+        
       }
     };
   };

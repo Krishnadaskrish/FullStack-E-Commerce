@@ -59,24 +59,7 @@ function  WishList (){
 
    }
 
-
-
-
-
-
-   
-
-  
-
-
-
-
-
-
-
-
-
-    return(
+   return(
         
             <>
             <Navbarfront/>

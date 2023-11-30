@@ -12,7 +12,6 @@ userRouter.post('/login',TryCatch(userController.userLongin))
 userRouter.get ('/products',VarifyToken,TryCatch(userController.productList))
 userRouter.get('/products/:id',VarifyToken,TryCatch(userController.productGetById))
 userRouter.get('/products/category/:categoryname',VarifyToken,TryCatch(userController.ProductByCategory))
-
 userRouter.post('/:id/cart',VarifyToken,TryCatch(userController.addToCart))
 userRouter.get('/:id/cart',VarifyToken,TryCatch(userController.showCart))
 userRouter.put('/:id/cart',VarifyToken,TryCatch(userController.updateCartQuantity))

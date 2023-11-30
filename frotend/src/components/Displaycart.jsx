@@ -65,16 +65,7 @@ import toast from "react-hot-toast";
     }
   };
 
-
-
-
-
-
-
-
-
-          
-        return (
+return (
           <>
 
           <Navbarfront/>
