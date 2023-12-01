@@ -13,7 +13,7 @@ app.use(express.json());
 
 app.use(cors())
 app.use("/api/users", userRoute);
-app.use("/api/admin",adminRoute)
+app.use("/api/admin",adminRoute);
 app.use(ErrorHandler);
 app.use(morgan('dev'))
 
