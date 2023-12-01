@@ -365,7 +365,7 @@ module.exports = {
           currency: "inr",
           product_data: {
             images : [item.productsId.image],
-            name: item.productsId.title,
+            name: item.productsId.title,  
 
           },
           unit_amount: Math.round(item.productsId.price * 100), // when item.price only given ,error occur, why ? check its reason . why multiply 100
