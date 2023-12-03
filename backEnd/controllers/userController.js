@@ -413,7 +413,7 @@ module.exports = {
       const userId = user._id;
       console.log("123",userId)
       const cartItem = user.cart ; 
-      console.log(cartItem)
+     
         const productIds = cartItem.map((item) => item.productsId);
 
 
