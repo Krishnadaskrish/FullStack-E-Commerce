@@ -62,12 +62,7 @@ function Login() {
 };
 
 
-
-  
-
-    
-   
-      return (
+ return (
     <MDBContainer className="my-5 gradient-form">
 
       <MDBRow>
