@@ -28,7 +28,7 @@ const All = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        console.log("Fetching products...");
+        
         const response = await Axios.get("api/users/products");
         console.log("API Response:", response);
     
