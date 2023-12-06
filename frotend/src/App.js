@@ -8,7 +8,7 @@ import Login from './components/Login';
 import Navbarfront from './components/Navbar';
 import Reg from './components/Reg';
 import Productcart from './Products/Productcart';
-import {product} from './Products/Product';
+
 import { MyContext } from './context/Context';
 import All from './Products/All';
 import  Cardfood  from './Products/Cardfood';
@@ -25,7 +25,7 @@ import Admin from './components/Admin/Admin';
 import AdminNav from './components/Admin/AdminNav';
 import AdminEdit from './components/Admin/AdminEdit';
 import AddProduct from './components/Admin/Addproduct';
-import { userList } from './components/Admin/Dummyusers';
+
 import ViewUsers from './components/Admin/Adminuser';
 import Moredetails from './components/Admin/Moredetails';
 import UserWishlist from './components/UserWishlist'
@@ -57,10 +57,10 @@ console.log(process.env.REACT_APP_BASE_URL)
 function App() {
 
   const[cart,setcart]=useState([])
-  const[pro,setpro]=useState(product)
+ 
   
   const [isLog, setIsLog] = useState(false);
-  const [list,setList]=useState(userList)
+
   const [users, setUsers] = useState([])
   const [wishList,setWishList] = useState([])
   const [wishStatus,setWishStatus] = useState(false)
@@ -125,9 +125,7 @@ function App() {
     
     <MyContext.Provider value={{
       cart,setcart,
-      pro,setpro,
       isLog,setIsLog,
-      list,
       users,setUsers,
       cartCount,setCartCount,
       addToWishlist,
