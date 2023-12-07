@@ -20,7 +20,7 @@ function Registration() {
       } else {
          try {
             const userData = { name, email,username , password };
-            const response = await axios.post("http://localhost:3003/api/users/register", userData);
+            const response = await axios.post("http://localhost:3003/api/users/register", userData); //without using the axios instance it's about the usecase
             if (response.status === 201) {
                toast.success(response.data.message);
                navigate("/log");
