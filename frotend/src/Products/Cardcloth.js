@@ -29,7 +29,7 @@ const Cloths = () => {
     };;
   
     fetchProduct();
-  }, []); // or [setProduct] if setProduct is being used inside the useEffect block
+  }, []); // or [setProduct] if setProduct is being used inside the useEffect block //its up to the usecase
   
 
 
